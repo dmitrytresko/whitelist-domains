@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import AddDomainDialog from "./AddDomainDialog";
 import AllowedDomainList from "./AllowedDomainList";
+import useDomainContext from "@/hooks/useDomainContext";
 
 const WhitelistDomains: React.FC = () => {
+  const { domains } = useDomainContext();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   return (
@@ -33,7 +35,12 @@ const WhitelistDomains: React.FC = () => {
                 height={12}
               />
             </button>
-            <h5 className="text-base text-foreground">Domains</h5>
+            <div className="flex items-center gap-1">
+              <h5 className="text-base text-foreground">Domains</h5>
+              <span className="text-base text-foreground-gray">
+                {domains.length}
+              </span>
+            </div>
           </div>
 
           <AllowedDomainList />
