@@ -7,18 +7,39 @@ import useDomainContext from "@/hooks/useDomainContext";
 import AllowedDomainList from "./AllowedDomainList";
 
 const AddDomainDialog: React.FC<BaseDialogProps> = ({ onClose, ...props }) => {
-  const { addDomain } = useDomainContext();
+  const { domains, addDomain } = useDomainContext();
   const [domainQuery, setDomainQuery] = useState("");
+  const [error, setError] = useState("");
+
+  const disableConfirm = !domainQuery || !!error;
+
+  const resetDomainQuery = useCallback(() => {
+    setDomainQuery("");
+    setError("");
+  }, []);
+
+  const onChangeDomainQuery = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setDomainQuery(e.target.value);
+      setError("");
+    },
+    []
+  );
 
   const onAddDomain = useCallback(() => {
+    if (domains.map(({ domainName }) => domainName).includes(domainQuery)) {
+      setError(`Domain with name ${domainQuery} already exists`);
+      return;
+    }
+
     addDomain(domainQuery);
-    setDomainQuery("");
-  }, [addDomain, domainQuery]);
+    resetDomainQuery();
+  }, [addDomain, domainQuery, domains, resetDomainQuery]);
 
   const onCloseInternal = useCallback(() => {
     onClose();
-    setDomainQuery("");
-  }, [onClose]);
+    resetDomainQuery();
+  }, [onClose, resetDomainQuery]);
 
   return (
     <Dialog
@@ -28,7 +49,7 @@ const AddDomainDialog: React.FC<BaseDialogProps> = ({ onClose, ...props }) => {
         For example, requests made when employees transfer numbers to Telgea 
         will be automatically associated with your account."
       confirmText="Add domain"
-      disableConfirm={!domainQuery}
+      disableConfirm={disableConfirm}
       onClose={onCloseInternal}
       onConfirm={onAddDomain}
     >
@@ -48,8 +69,9 @@ const AddDomainDialog: React.FC<BaseDialogProps> = ({ onClose, ...props }) => {
               placeholder-gray-300 focus:background-gray outline-background-gray transition-all"
             placeholder="www.telgea.com"
             value={domainQuery}
-            onChange={(e) => setDomainQuery(e.target.value)}
+            onChange={onChangeDomainQuery}
           />
+          {error && <p className="text-xs text-red-500">{error}</p>}
         </div>
 
         {/* "+" button does the same as "Add domain" here on purpose, since it's not that obvious from the
@@ -57,7 +79,7 @@ const AddDomainDialog: React.FC<BaseDialogProps> = ({ onClose, ...props }) => {
         */}
         <button
           type="button"
-          disabled={!domainQuery}
+          disabled={disableConfirm}
           className="text-center inline-flex items-center p-5 bg-foreground hover:opacity-80 active:opacity-80 
             rounded-full text-xs cursor-pointer transition-all
             disabled:pointer-events-none disabled:border-gray-200
