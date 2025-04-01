@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Task 1: Implement a UI Component (Whitelisted Domains)
 
-## Getting Started
+### I ended up going with `Whitelisted Domains` component, implementing the following key parts mentioned below
 
-First, run the development server:
+- Top-level `WhitelistDomains` component, rendered on the home page
+- Dedicated `AddDomainDialog` component to allow adding new domains to the allowed list
+- Dedicated `RemoveDomainDialog` component to allow removing selected domains from the allowed list
+- A few reusable components (e.g. `DomainTag`, `Dialog`, `AllowedDomainList`) to effectively compose the layout
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Notes and trade-offs
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I highlighted a few important notes in the comments of related `tsx` files (see `DomainTag.tsx`, `AddDomainDialog.tsx`, `Dialog.tsx`). I also tried splitting features into separate commits to able to better track history of implemented functionality. Nevertheless, but there're still few more trade-fss to mention:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- There could've been a few more reusable components added to be used across the app, like `Button`, `IconButton`, `TextInput`, `Card`, `ConfirmDialog` etc., which I didn't have enough time for.
+- Uses Context API, coming from `useDomainContext` hook, to store and manipulate whitelisted domains, allowing global access to them throughout the whole file tree. The domain list gets reset each time after hard refresh or app rebuild, which is not ideal. Can be improved by getting initial context value for domains from localStorage to maintain context between refreshes.
+- An additional context could've been created to handle the open/close state of the dialogs, which would help to avoid having `isXOpen` states across the app, relying instead on a handful of callbacks like `renderDialog`, `closeDialog`, coming from that context.
+- I'm not using `Selecta` font, which seems to be the primary font for the app in Figma, since it's not available through Google Fonts and I wasn't able to find any free sources to download form to host it locally. Hence default `Arial` font is being used in place of `Selecta` where needed; `Inter` font is utilized as expected though.
+- Handles duplicate domain name error when trying to add a domain with an already existing name.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Task 3: Written Response
