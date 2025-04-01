@@ -21,9 +21,9 @@ I highlighted a few important notes in the comments of related `tsx` files (see 
 
 Basically, before starting to implement the feature I'd reach out to designer to understand if those misalignments were intended or if they can be ignored. Based on the answer, I'd try to clarify what was the reason behind the one-off misalignment in spacing/font sizes compared to other typical components. If that was an inaccuracy, I would ask the designer to adjust it not only in this specific case, but also to check other occurrences of the same component to avoid the same confusions moving forward.
 
-Besides that I'd try to double check that with the project manager/business owner to see if that can be expected to happen occasionally. I think it can be quite critical if not handled properly, since that can cause additional issues with the backlog and might create a "waterfall" of stories to refactor these imperfections across the app. So it's better to try resolving it early on, before diving in to the development.
+Besides that, I'd try to double check that with the project manager/business owner to see if this can be expected to happen occasionally. I think it can become quite critical if not handled properly, by causing additional issues with the backlog and potentially creating a "waterfall" of stories to refactor these imperfections across the app. So it's better to try resolving it early on, before diving in to the development.
 
-On top of that, I can think of two ways to move forward from there:
+On top of that, I can think of two ways to about it:
 
 1. Ignore potential misalignments and inaccuracies in the design mock-ups -> proceed with the an already existing commonly uses spacing/fonts.
 2. Designer will adjust the mock-ups according to the expectations of business owners, relying on commonly used terms and variables -> once the designs are, we can review them either together (on a call, potentially someone else from the development team, who might also benefit from these changes moving forward) or me individually, to understand if everything it's all clear now, if it looks better, and if's ready to be actually developed.
