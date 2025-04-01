@@ -3,7 +3,10 @@
 :root {
   --root-background: #f2f1ed;
   --background: #ffffff;
-  --foreground: #000000;
+  --background-black: #1f1f1f;
+  --background-gray: #f4f3f3;
+  --foreground: #151515;
+  --foreground-gray: #9b9a9a;
 }
 
 body {
@@ -14,6 +17,8 @@ body {
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-gray: var(--background-gray);
+  --color-background-black: var(--background-black);
   --color-foreground: var(--foreground);
-  --color-gray: var(--gray);
+  --color-foreground-gray: var(--foreground-gray);
 }
